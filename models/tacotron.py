@@ -101,6 +101,7 @@ class Tacotron():
             self.alignments = alignments
             self.mel_targets = mel_targets
             self.linear_targets = linear_targets
+
             log('Initialized Tacotron model. Dimensions: ')
             log('  embedding:               %d' % embedded_inputs.shape[-1])
             log('  prenet out:              %d' % prenet_outputs.shape[-1])
