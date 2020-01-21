@@ -63,7 +63,7 @@ class Tacotron():
             decoder_cell = MultiRNNCell([
                 OutputProjectionWrapper(concat_cell, hp.decoder_depth),
                 ResidualWrapper(
-                    ZoneoutLSTMCell(hp.decoder_depth, is_training,zoneout_factor_cell=hp.tacotron_zoneout_rate,
+                    ZoneoutLSTMCell(hp.decoder_depth, is_training, zoneout_factor_cell=hp.tacotron_zoneout_rate,
                                     zoneout_factor_output=hp.tacotron_zoneout_rate)),
                 ResidualWrapper(
                     ZoneoutLSTMCell(hp.decoder_depth, is_training, zoneout_factor_cell=hp.tacotron_zoneout_rate,
