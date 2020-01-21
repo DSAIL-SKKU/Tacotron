@@ -51,7 +51,6 @@ class Tacotron():
                 BahdanauAttention(hp.attention_depth, encoder_outputs),
                 alignment_history=True,
                 output_attention=False)  # [N, T_in, attention_depth=256]
-            
 
             # Apply prenet before concatenation in AttentionWrapper.
             attention_cell = DecoderPrenetWrapper(attention_cell, is_training, hp.prenet_depths)
@@ -94,7 +93,7 @@ class Tacotron():
 
             # Grab alignments from the final decoder state:
             alignments = tf.transpose(final_decoder_state[0].alignment_history.stack(), [1, 2, 0])
-			
+
             self.inputs = inputs
             self.input_lengths = input_lengths
             self.mel_outputs = mel_outputs
