@@ -23,6 +23,7 @@ hparams = tf.contrib.training.HParams(
     postnet_depth=256,
     attention_depth=256,
     decoder_depth=256,
+    tacotron_zoneout_rate=0.1,
 
     # Training:
     batch_size=32,

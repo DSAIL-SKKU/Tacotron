@@ -5,7 +5,7 @@ from text.symbols import symbols
 from util.infolog import log
 from .helpers import TacoTestHelper, TacoTrainingHelper
 from .modules import encoder_cbhg, post_cbhg, prenet
-from .rnn_wrappers import DecoderPrenetWrapper, ConcatOutputAndAttentionWrapper
+from .rnn_wrappers import DecoderPrenetWrapper, ConcatOutputAndAttentionWrapper, ZoneoutLSTMCell
 
 
 class Tacotron():
@@ -62,8 +62,13 @@ class Tacotron():
             # Decoder (layers specified bottom to top):
             decoder_cell = MultiRNNCell([
                 OutputProjectionWrapper(concat_cell, hp.decoder_depth),
-                ResidualWrapper(GRUCell(hp.decoder_depth)),
-                ResidualWrapper(GRUCell(hp.decoder_depth))
+                ResidualWrapper(
+                    ZoneoutLSTMCell(hp.decoder_depth, is_training,zoneout_factor_cell=hp.tacotron_zoneout_rate,
+                                    zoneout_factor_output=hp.tacotron_zoneout_rate)),
+                ResidualWrapper(
+                    ZoneoutLSTMCell(hp.decoder_depth, is_training, zoneout_factor_cell=hp.tacotron_zoneout_rate,
+                                    zoneout_factor_output=hp.tacotron_zoneout_rate)),
+
             ], state_is_tuple=True)  # [N, T_in, decoder_depth=256]
 
             # Project onto r mel spectrograms (predict r outputs at each RNN step):
