@@ -57,7 +57,7 @@ Pull requests are welcome!
    python3 demo_server.py --checkpoint /tmp/tacotron-20180906/model.ckpt
    ```
 
-3. **Point your browser at localhost:9000**
+3. **Point your browser at localhost:3000**
    * Type what you want to synthesize
 
 
@@ -77,10 +77,10 @@ Pull requests are welcome!
 
 2. **Unpack the dataset into `~/tacotron`**
 
-   After unpacking, your tree should look like this for LJ Speech:
+   After unpacking, your tree should look like this for Korean Single Speaker Dataset:
    ```
    tacotron
-     |- LJSpeech-1.1
+     |- kss
          |- metadata.csv
          |- wavs
    ```
@@ -101,7 +101,7 @@ Pull requests are welcome!
 
 3. **Preprocess the data**
    ```
-   python3 preprocess.py --dataset ljspeech
+   python3 preprocess.py --dataset kss
    ```
      * Use `--dataset blizzard` for Blizzard data
 
@@ -173,6 +173,9 @@ Pull requests are welcome!
   * Here is the expected loss curve when training on LJ Speech with the default hyperparameters:
     ![Loss curve](https://user-images.githubusercontent.com/1945356/36077599-c0513e4a-0f21-11e8-8525-07347847720c.png)
 
+## Modifications
+
+  * We changed GRU cells with LSTM Zoneout cells
 
 ## Other Implementations
   * By Alex Barron: https://github.com/barronalex/Tacotron
