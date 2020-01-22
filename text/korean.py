@@ -226,10 +226,10 @@ count_checker = "(시|명|가지|살|마리|포기|송이|수|톨|통|점|개|�
 def normalize_number(text):
     text = normalize_with_dictionary(text, unit_to_kor1)
     text = normalize_with_dictionary(text, unit_to_kor2)
-    text = re.sub(number_checker + count_checker,
-                  lambda x: number_to_korean(x, True), text)
-    text = re.sub(number_checker,
-                  lambda x: number_to_korean(x, False), text)
+    # text = re.sub(number_checker + count_checker,
+    #               lambda x: number_to_korean(x, True), text)
+    # text = re.sub(number_checker,
+    #               lambda x: number_to_korean(x, False), text)
     return text
 
 
