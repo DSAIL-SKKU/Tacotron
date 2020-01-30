@@ -30,6 +30,15 @@ class Tacotron():
             encoder_outputs = encoder_cbhg(prenet_outputs, input_lengths, is_training,  # [N, T_in, encoder_depth=256]
                                            hp.encoder_depth)
 
+            #GRU Mechanism
+            if hp.RNN_type == 'GRU':
+                RNN_mechanism = GRUCell(hp.decoder_depth)
+            elif hp.RNN_type == 'LSTM_zoneout':
+                RNN_mechanism =ZoneoutLSTMCell(hp.decoder_depth, is_training, zoneout_factor_cell=hp.tacotron_zoneout_rate,
+                                    zoneout_factor_output=hp.tacotron_zoneout_rate)
+            elif hp.RNN_type == 'LSTM':
+                RNN_mechanism = LSTMCell(hp.decoder_depth)
+
             # Attention
             attention_cell = AttentionWrapper(
                 GRUCell(hp.attention_depth),
@@ -46,12 +55,8 @@ class Tacotron():
             # Decoder (layers specified bottom to top):
             decoder_cell = MultiRNNCell([
                 OutputProjectionWrapper(concat_cell, hp.decoder_depth),
-                ResidualWrapper(
-                    ZoneoutLSTMCell(hp.decoder_depth, is_training, zoneout_factor_cell=hp.tacotron_zoneout_rate,
-                                    zoneout_factor_output=hp.tacotron_zoneout_rate)),
-                ResidualWrapper(
-                    ZoneoutLSTMCell(hp.decoder_depth, is_training, zoneout_factor_cell=hp.tacotron_zoneout_rate,
-                                    zoneout_factor_output=hp.tacotron_zoneout_rate)),
+                ResidualWrapper(RNN_mechanism),
+                ResidualWrapper(RNN_mechanism),
 
             ], state_is_tuple=True)  # [N, T_in, decoder_depth=256]
 

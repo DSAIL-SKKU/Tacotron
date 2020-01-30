@@ -24,6 +24,7 @@ hparams = tf.contrib.training.HParams(
     attention_depth=256,
     decoder_depth=256,
     tacotron_zoneout_rate=0.1,
+    RNN_type='GRU',
 
     # Training:
     batch_size=32,
