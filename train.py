@@ -125,6 +125,7 @@ def train(log_dir, args):
 
 
 def main():
+	
 	parser = argparse.ArgumentParser()
 	parser.add_argument('--base_dir', default=os.path.expanduser('~/jeewoo/Tacotron/'))
 	parser.add_argument('--input', default='training/train.txt')
