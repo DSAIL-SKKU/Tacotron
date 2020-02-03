@@ -41,7 +41,7 @@ class Tacotron():
 
             # Attention
             attention_cell = AttentionWrapper(
-                GRUCell(hp.attention_depth),
+                ZoneoutLSTMCell(hp.attention_depth),
                 BahdanauAttention(hp.attention_depth, encoder_outputs),
                 alignment_history=True,
                 output_attention=False)  # [N, T_in, attention_depth=256]
