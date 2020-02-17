@@ -5,7 +5,6 @@ import re
 import os
 import ast
 import json
-from korean_romanizer import Romanizer
 from jamo import hangul_to_jamo, h2j, j2h
 
 from .kor_dic import english_dictionary, etc_dictionary
@@ -151,10 +150,6 @@ def tokenize(text, as_id=False):
     # jamo package에 있는 hangul_to_jamo를 이용하여 한글 string을 초성/중성/종성으로 나눈다. 
     
     text = normalize(text)
-    
-    r = Romanizer(text)
-    text = r.romanize()
-    
     tokens = list(hangul_to_jamo(text))  # '존경하는'  --> ['ᄌ', 'ᅩ', 'ᆫ', 'ᄀ', 'ᅧ', 'ᆼ', 'ᄒ', 'ᅡ', 'ᄂ', 'ᅳ', 'ᆫ', '~']
 
     if as_id:
